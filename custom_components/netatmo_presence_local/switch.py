@@ -42,7 +42,7 @@ def _night_setter(trigger: str) -> Callable[..., Awaitable[Any]]:
         config = merge_floodlight_config(
             coordinator.data.floodlight, {"night": {trigger: enabled}}
         )
-        return await coordinator.api.async_set_floodlight_config(config)
+        return await coordinator.async_write_floodlight(config)
 
     return _set
 
@@ -134,5 +134,4 @@ class NetatmoPresenceSwitch(NetatmoPresenceEntity, SwitchEntity):
             raise HomeAssistantError(
                 f"Setting {self.entity_description.key} failed: {err}"
             ) from err
-        await self.coordinator.async_request_refresh()
         self.async_write_ha_state()

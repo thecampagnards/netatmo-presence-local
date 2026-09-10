@@ -147,7 +147,6 @@ class NetatmoPresenceFloodlight(NetatmoPresenceEntity, LightEntity):
         """Merge ``config`` into the current one and send it to the camera."""
         merged = merge_floodlight_config(self.data.floodlight, config)
         try:
-            await self.coordinator.api.async_set_floodlight_config(merged)
+            await self.coordinator.async_write_floodlight(merged)
         except (NetatmoLocalError, ValueError) as err:
             raise HomeAssistantError(f"Setting the floodlight failed: {err}") from err
-        await self.coordinator.async_request_refresh()

@@ -188,6 +188,25 @@ Detection sensors read the camera's event log every 30 seconds and stay on for
 official Netatmo integration: this component targets local control, not
 latency.
 
+## Timing
+
+There are three different delays, and only one of them is avoidable:
+
+| What | Delay |
+| --- | --- |
+| A change you make from Home Assistant | none — applied locally as soon as the camera accepts it |
+| A change made elsewhere (Netatmo app, another client) | up to 30 seconds, the polling interval |
+| A detection appearing on a `binary_sensor` | up to 30 seconds, then it stays on for 90 |
+
+Commands do not wait for a re-read: the camera echoes back exactly the
+configuration it was handed, so the answer is already known and is applied
+straight away. The regular poll then confirms it.
+
+One delay no amount of polling fixes: in `auto` mode the camera never reports
+whether the lamp is physically lit, only the configured mode. Same for
+monitoring on firmwares without `get_config` — the switch shows the state this
+integration last set, not one read back from the camera.
+
 ## Services
 
 ### `netatmo_presence_local.set_floodlight`

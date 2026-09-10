@@ -181,6 +181,20 @@ class NetatmoPresenceCoordinator(DataUpdateCoordinator[PresenceData]):
         """Return the mode to fall back to when the floodlight is turned off."""
         return restore_target(self.passive_mode)
 
+    async def async_write_floodlight(self, config: dict[str, Any]) -> None:
+        """Send a floodlight configuration and reflect it straight away.
+
+        The camera echoes back exactly what it was given, so there is nothing
+        to learn from re-reading it: applying the configuration locally spares
+        the UI a round trip that would otherwise show the old value until the
+        answer landed.
+        """
+        await self.api.async_set_floodlight_config(config)
+        self.remember_passive_mode(config.get("mode"))
+        if self.data is not None:
+            self.data.floodlight = config
+            self.async_set_updated_data(self.data)
+
     async def async_set_monitoring(self, enabled: bool) -> None:
         """Switch video monitoring and remember the state we put it in."""
         await self.api.async_set_monitoring(enabled)

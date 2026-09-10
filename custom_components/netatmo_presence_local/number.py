@@ -56,7 +56,6 @@ class NetatmoFloodlightIntensity(NetatmoPresenceEntity, NumberEntity):
             self.data.floodlight, {"intensity": int(value)}
         )
         try:
-            await self.coordinator.api.async_set_floodlight_config(config)
+            await self.coordinator.async_write_floodlight(config)
         except (NetatmoLocalError, ValueError) as err:
             raise HomeAssistantError(f"Setting the intensity failed: {err}") from err
-        await self.coordinator.async_request_refresh()

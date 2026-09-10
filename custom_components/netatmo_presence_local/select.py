@@ -44,9 +44,8 @@ class NetatmoFloodlightMode(NetatmoPresenceEntity, SelectEntity):
         """Switch the floodlight to ``option``."""
         config = merge_floodlight_config(self.data.floodlight, {"mode": option})
         try:
-            await self.coordinator.api.async_set_floodlight_config(config)
+            await self.coordinator.async_write_floodlight(config)
         except (NetatmoLocalError, ValueError) as err:
             raise HomeAssistantError(
                 f"Setting the floodlight mode failed: {err}"
             ) from err
-        await self.coordinator.async_request_refresh()
