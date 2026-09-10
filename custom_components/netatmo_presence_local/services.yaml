@@ -1,0 +1,68 @@
+set_floodlight:
+  target:
+    entity:
+      integration: netatmo_presence_local
+      domain: light
+  fields:
+    mode:
+      required: false
+      example: auto
+      selector:
+        select:
+          options:
+            - "on"
+            - "off"
+            - auto
+    intensity:
+      required: false
+      example: 80
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+
+set_night_triggers:
+  target:
+    entity:
+      integration: netatmo_presence_local
+      domain: light
+  fields:
+    always:
+      required: false
+      selector:
+        boolean:
+    person:
+      required: false
+      selector:
+        boolean:
+    vehicle:
+      required: false
+      selector:
+        boolean:
+    animal:
+      required: false
+      selector:
+        boolean:
+    movement:
+      required: false
+      selector:
+        boolean:
+
+raw_command:
+  fields:
+    device_id:
+      required: true
+      selector:
+        device:
+          integration: netatmo_presence_local
+    command:
+      required: true
+      example: floodlight_get_config
+      selector:
+        text:
+    params:
+      required: false
+      example: '{"offset": "5"}'
+      selector:
+        object:

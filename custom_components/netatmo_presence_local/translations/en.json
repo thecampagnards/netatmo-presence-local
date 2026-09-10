@@ -1,0 +1,189 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Netatmo Presence (local)",
+        "description": "Enter the camera's local address and its device key. The key is the secret path segment that every local API address contains, between the host name and the word command.",
+        "data": {
+          "host": "Host",
+          "vkey": "Device key"
+        },
+        "data_description": {
+          "host": "Hostname or IP address of the camera, with no scheme",
+          "vkey": "The secret path segment of the camera's local API"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Device key rejected",
+        "description": "The camera at {host} no longer accepts the stored device key. Enter the current one.",
+        "data": {
+          "vkey": "Device key"
+        }
+      },
+      "reconfigure": {
+        "title": "Change the camera's address or key",
+        "description": "Update where the camera is reached and the device key used to talk to it. Leave the key as it is if only the address changed.",
+        "data": {
+          "host": "Host",
+          "vkey": "Device key"
+        },
+        "data_description": {
+          "host": "Hostname or IP address of the camera, with no scheme",
+          "vkey": "The secret path segment of the camera's local API"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Cannot reach the camera. Check the address and that Home Assistant is on the same network. {error_detail}",
+      "invalid_auth": "The camera rejected this device key. {error_detail}",
+      "unknown": "Unexpected response from the camera. {error_detail}"
+    },
+    "abort": {
+      "already_configured": "This camera is already configured.",
+      "reauth_successful": "The device key was updated.",
+      "reconfigure_successful": "The camera's address and key were updated.",
+      "another_device": "That address and key point at a different camera. Add it as a new device instead."
+    }
+  },
+  "entity": {
+    "light": {
+      "floodlight": {
+        "name": "Floodlight"
+      }
+    },
+    "select": {
+      "floodlight_mode": {
+        "name": "Floodlight mode",
+        "state": {
+          "on": "Always on",
+          "off": "Off",
+          "auto": "Automatic"
+        }
+      }
+    },
+    "number": {
+      "floodlight_intensity": {
+        "name": "Floodlight intensity"
+      }
+    },
+    "switch": {
+      "monitoring": {
+        "name": "Monitoring"
+      },
+      "night_always": {
+        "name": "Night light always on"
+      },
+      "night_person": {
+        "name": "Night light on person"
+      },
+      "night_vehicle": {
+        "name": "Night light on vehicle"
+      },
+      "night_animal": {
+        "name": "Night light on animal"
+      },
+      "night_movement": {
+        "name": "Night light on movement"
+      }
+    },
+    "sensor": {
+      "last_event": {
+        "name": "Last event"
+      },
+      "last_event_type": {
+        "name": "Last event type"
+      },
+      "sd_status": {
+        "name": "SD card status"
+      },
+      "power_status": {
+        "name": "Power status"
+      },
+      "firmware": {
+        "name": "Firmware"
+      },
+      "wifi_strength": {
+        "name": "Wi-Fi strength"
+      }
+    },
+    "binary_sensor": {
+      "motion": {
+        "name": "Motion"
+      },
+      "person": {
+        "name": "Person"
+      },
+      "vehicle": {
+        "name": "Vehicle"
+      },
+      "animal": {
+        "name": "Animal"
+      }
+    },
+    "button": {
+      "rediscover": {
+        "name": "Re-detect features"
+      }
+    }
+  },
+  "services": {
+    "set_floodlight": {
+      "name": "Set floodlight",
+      "description": "Sets the floodlight mode and intensity in a single call.",
+      "fields": {
+        "mode": {
+          "name": "Mode",
+          "description": "on forces the light, off disables it, auto lets the camera decide."
+        },
+        "intensity": {
+          "name": "Intensity",
+          "description": "Brightness of the floodlight, from 0 to 100 percent."
+        }
+      }
+    },
+    "set_night_triggers": {
+      "name": "Set night triggers",
+      "description": "Chooses which night-time detections switch the floodlight on while it is in automatic mode.",
+      "fields": {
+        "always": {
+          "name": "Always",
+          "description": "Keep the floodlight on all night."
+        },
+        "person": {
+          "name": "Person",
+          "description": "Light up when a person is detected."
+        },
+        "vehicle": {
+          "name": "Vehicle",
+          "description": "Light up when a vehicle is detected."
+        },
+        "animal": {
+          "name": "Animal",
+          "description": "Light up when an animal is detected."
+        },
+        "movement": {
+          "name": "Movement",
+          "description": "Light up on any movement."
+        }
+      }
+    },
+    "raw_command": {
+      "name": "Raw command",
+      "description": "Calls any command of the camera's local API and returns its response. Useful to explore firmware-specific endpoints.",
+      "fields": {
+        "device_id": {
+          "name": "Camera",
+          "description": "The camera to talk to."
+        },
+        "command": {
+          "name": "Command",
+          "description": "Command name, without the leading /command/."
+        },
+        "params": {
+          "name": "Parameters",
+          "description": "Query-string parameters, as a key/value mapping."
+        }
+      }
+    }
+  }
+}

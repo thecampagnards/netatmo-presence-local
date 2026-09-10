@@ -1,0 +1,31 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    name: Stamp version and attach the integration
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set the manifest version to the release tag
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          manifest=custom_components/netatmo_presence_local/manifest.json
+          jq --arg v "$version" '.version = $v' "$manifest" > "$manifest.tmp"
+          mv "$manifest.tmp" "$manifest"
+          cat "$manifest"
+
+      - name: Attach the integration as a zip
+        run: |
+          cd custom_components/netatmo_presence_local
+          zip -r "$GITHUB_WORKSPACE/netatmo_presence_local.zip" .
+          gh release upload "$GITHUB_REF_NAME" \
+            "$GITHUB_WORKSPACE/netatmo_presence_local.zip" --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}

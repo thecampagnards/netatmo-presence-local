@@ -1,0 +1,189 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Netatmo Presence (local)",
+        "description": "Saisissez l'adresse locale de la caméra et sa clé d'appareil. La clé est le segment secret que contient chaque adresse de l'API locale, entre le nom d'hôte et le mot command.",
+        "data": {
+          "host": "Hôte",
+          "vkey": "Clé d'appareil"
+        },
+        "data_description": {
+          "host": "Nom d'hôte ou adresse IP de la caméra, sans préfixe de protocole",
+          "vkey": "Le segment d'URL secret de l'API locale de la caméra"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Clé d'appareil refusée",
+        "description": "La caméra {host} n'accepte plus la clé enregistrée. Saisissez la clé actuelle.",
+        "data": {
+          "vkey": "Clé d'appareil"
+        }
+      },
+      "reconfigure": {
+        "title": "Modifier l'adresse ou la clé de la caméra",
+        "description": "Mettez à jour l'adresse à laquelle la caméra est jointe et la clé d'appareil utilisée pour lui parler. Laissez la clé telle quelle si seule l'adresse a changé.",
+        "data": {
+          "host": "Hôte",
+          "vkey": "Clé d'appareil"
+        },
+        "data_description": {
+          "host": "Nom d'hôte ou adresse IP de la caméra, sans préfixe de protocole",
+          "vkey": "Le segment d'URL secret de l'API locale de la caméra"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossible de joindre la caméra. Vérifiez l'adresse et que Home Assistant est sur le même réseau. {error_detail}",
+      "invalid_auth": "La caméra a refusé cette clé d'appareil. {error_detail}",
+      "unknown": "Réponse inattendue de la caméra. {error_detail}"
+    },
+    "abort": {
+      "already_configured": "Cette caméra est déjà configurée.",
+      "reauth_successful": "La clé d'appareil a été mise à jour.",
+      "reconfigure_successful": "L'adresse et la clé de la caméra ont été mises à jour.",
+      "another_device": "Cette adresse et cette clé désignent une autre caméra. Ajoutez-la comme nouvel appareil."
+    }
+  },
+  "entity": {
+    "light": {
+      "floodlight": {
+        "name": "Projecteur"
+      }
+    },
+    "select": {
+      "floodlight_mode": {
+        "name": "Mode du projecteur",
+        "state": {
+          "on": "Toujours allumé",
+          "off": "Éteint",
+          "auto": "Automatique"
+        }
+      }
+    },
+    "number": {
+      "floodlight_intensity": {
+        "name": "Intensité du projecteur"
+      }
+    },
+    "switch": {
+      "monitoring": {
+        "name": "Surveillance"
+      },
+      "night_always": {
+        "name": "Éclairage nocturne permanent"
+      },
+      "night_person": {
+        "name": "Éclairage nocturne sur personne"
+      },
+      "night_vehicle": {
+        "name": "Éclairage nocturne sur véhicule"
+      },
+      "night_animal": {
+        "name": "Éclairage nocturne sur animal"
+      },
+      "night_movement": {
+        "name": "Éclairage nocturne sur mouvement"
+      }
+    },
+    "sensor": {
+      "last_event": {
+        "name": "Dernier événement"
+      },
+      "last_event_type": {
+        "name": "Type du dernier événement"
+      },
+      "sd_status": {
+        "name": "État de la carte SD"
+      },
+      "power_status": {
+        "name": "État de l'alimentation"
+      },
+      "firmware": {
+        "name": "Micrologiciel"
+      },
+      "wifi_strength": {
+        "name": "Signal Wi-Fi"
+      }
+    },
+    "binary_sensor": {
+      "motion": {
+        "name": "Mouvement"
+      },
+      "person": {
+        "name": "Personne"
+      },
+      "vehicle": {
+        "name": "Véhicule"
+      },
+      "animal": {
+        "name": "Animal"
+      }
+    },
+    "button": {
+      "rediscover": {
+        "name": "Redétecter les fonctions"
+      }
+    }
+  },
+  "services": {
+    "set_floodlight": {
+      "name": "Régler le projecteur",
+      "description": "Règle le mode et l'intensité du projecteur en un seul appel.",
+      "fields": {
+        "mode": {
+          "name": "Mode",
+          "description": "on force l'allumage, off désactive, auto laisse la caméra décider."
+        },
+        "intensity": {
+          "name": "Intensité",
+          "description": "Luminosité du projecteur, de 0 à 100 pour cent."
+        }
+      }
+    },
+    "set_night_triggers": {
+      "name": "Régler les déclencheurs nocturnes",
+      "description": "Choisit quelles détections nocturnes allument le projecteur en mode automatique.",
+      "fields": {
+        "always": {
+          "name": "Toujours",
+          "description": "Garder le projecteur allumé toute la nuit."
+        },
+        "person": {
+          "name": "Personne",
+          "description": "Allumer à la détection d'une personne."
+        },
+        "vehicle": {
+          "name": "Véhicule",
+          "description": "Allumer à la détection d'un véhicule."
+        },
+        "animal": {
+          "name": "Animal",
+          "description": "Allumer à la détection d'un animal."
+        },
+        "movement": {
+          "name": "Mouvement",
+          "description": "Allumer à tout mouvement."
+        }
+      }
+    },
+    "raw_command": {
+      "name": "Commande brute",
+      "description": "Appelle n'importe quelle commande de l'API locale de la caméra et retourne sa réponse. Utile pour explorer les points d'entrée propres au micrologiciel.",
+      "fields": {
+        "device_id": {
+          "name": "Caméra",
+          "description": "La caméra à interroger."
+        },
+        "command": {
+          "name": "Commande",
+          "description": "Nom de la commande, sans le /command/ initial."
+        },
+        "params": {
+          "name": "Paramètres",
+          "description": "Paramètres de requête, sous forme de dictionnaire clé/valeur."
+        }
+      }
+    }
+  }
+}

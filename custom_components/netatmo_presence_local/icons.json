@@ -1,0 +1,46 @@
+{
+  "entity": {
+    "binary_sensor": {
+      "animal": { "default": "mdi:paw" },
+      "motion": { "default": "mdi:motion-sensor" },
+      "person": { "default": "mdi:walk" },
+      "vehicle": { "default": "mdi:car" }
+    },
+    "button": {
+      "rediscover": { "default": "mdi:refresh-auto" }
+    },
+    "light": {
+      "floodlight": { "default": "mdi:track-light" }
+    },
+    "number": {
+      "floodlight_intensity": { "default": "mdi:brightness-percent" }
+    },
+    "select": {
+      "floodlight_mode": { "default": "mdi:lightbulb-auto" }
+    },
+    "sensor": {
+      "firmware": { "default": "mdi:chip" },
+      "last_event": { "default": "mdi:calendar-clock" },
+      "last_event_type": { "default": "mdi:shape-outline" },
+      "power_status": { "default": "mdi:power-plug" },
+      "sd_status": { "default": "mdi:sd" },
+      "wifi_strength": { "default": "mdi:wifi" }
+    },
+    "switch": {
+      "monitoring": {
+        "default": "mdi:cctv",
+        "state": { "off": "mdi:cctv-off" }
+      },
+      "night_always": { "default": "mdi:weather-night" },
+      "night_animal": { "default": "mdi:paw" },
+      "night_movement": { "default": "mdi:motion-sensor" },
+      "night_person": { "default": "mdi:walk" },
+      "night_vehicle": { "default": "mdi:car" }
+    }
+  },
+  "services": {
+    "raw_command": { "service": "mdi:console-line" },
+    "set_floodlight": { "service": "mdi:spotlight-beam" },
+    "set_night_triggers": { "service": "mdi:weather-night" }
+  }
+}
